@@ -10,6 +10,7 @@ A su vez también existen varios formatos en los que se pueden escribir estas et
 Estos tipos de anotación nos permiten crear etiquetas para los dos tipos que vamos a ver.
 # Object Detection
 La detección de objetos es una tarea que implica detectar la posición y la clase de los objetos que aparezcan en una imagen.![[elefante_od.png]]
+
 Las etiquetas necesarias para Object Detection son los rectángulos que incluyen al objeto en su interior estos se definen normalmente por su esquina, altura y anchura.
 ```json title=Elefante.json
 "annotations": [{ 
