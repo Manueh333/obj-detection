@@ -12,7 +12,7 @@ Estos tipos de anotación nos permiten crear etiquetas para los dos tipos que va
 La detección de objetos es una tarea que implica detectar la posición y la clase de los objetos que aparezcan en una imagen.![[elefante_od.png]]
 
 Las etiquetas necesarias para Object Detection son los rectángulos que incluyen al objeto en su interior estos se definen normalmente por su esquina, altura y anchura.
-```json title=Elefante.json
+```json title="Elefante.json -- COCO"
 "annotations": [{ 
 	"id": 1, 
 	"image_id": 1, 
@@ -30,7 +30,7 @@ Las etiquetas necesarias para Object Detection son los rectángulos que incluyen
  La segmentación de instancias va un pasa más lejos y en vez de dar solo la posición y clase también se detecta la silueta del objeto.
 
 ![[elefante_id.png]]
-```json title=Elefante.json
+```json title="Elefante.json -- COCO"
 "annotations": [{ 
 	"id": 1, 
 	"image_id": 1, 

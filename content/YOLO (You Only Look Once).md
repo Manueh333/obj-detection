@@ -28,3 +28,104 @@ results = model.train(data="/path/to/data.yaml", epochs="100")
 
 Puede informarse sobre los parámetros que pueden usarse en model.train() pinchado [aquí](https://docs.ultralytics.com/modes/train/#train-settings)
 
+# Prueba con OpenCV
+
+Primero instalamos OpenCV
+```pip
+pip install opencv-python
+```
+
+Y utilizamos la librería para crear una app que con la cámara de nuestro ordenador utilice YOLO para detectar los objetos que aparecen en escena.
+
+```python title=opencv.py fold=true
+import cv2
+
+import numpy as np
+
+from ultralytics import YOLO
+
+  
+
+# Cargar el modelo
+model = YOLO("path/to/best.pt") 
+# Remplaza la dirección con la del modelo que hemos entrenado antes
+
+  
+
+# Iniciar la cámara
+
+cap = cv2.VideoCapture(0) # Usar el dispositivo 0 de cámara
+
+  
+
+while True:
+
+ret, frame = cap.read()
+
+if not ret:
+
+break
+
+  
+
+# Convert frame to RGB (YOLO expects RGB images)
+
+rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+  
+
+# Perform YOLO detection
+
+results = model.predict(rgb_frame, conf=0.5, verbose=False) # Set desired confidence threshold
+
+  
+
+# Parse the results
+
+for result in results:
+
+for box in result.boxes:
+
+x1, y1, x2, y2 = map(int, box.xyxy[0].tolist()) # Bounding box coordinates
+
+conf = box.conf[0] # Confidence score
+
+cls = int(box.cls[0]) # Class ID
+
+  
+
+# Get class label (optional, customize this based on your dataset)
+
+label = model.names[cls]
+
+  
+
+# Draw bounding box and label on the frame
+
+cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+cv2.putText(frame, f"{label} {conf:.2f}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+  
+
+# Display the frame with detections
+
+cv2.imshow("YOLO Detection", frame)
+
+  
+
+# Break on pressing 'q'
+
+if cv2.waitKey(1) & 0xFF == ord('q'):
+
+break
+
+  
+
+# Release resources
+
+cap.release()
+
+cv2.destroyAllWindows()
+```
+
